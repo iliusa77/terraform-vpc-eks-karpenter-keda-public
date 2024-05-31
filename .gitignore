@@ -1,0 +1,8 @@
+.vscode-upload.json
+.terraform*
+terraform.tfstate
+terraform.tfstate.backup
+kubeconfig*
+Vagrantfile
+.vagrant
+output/

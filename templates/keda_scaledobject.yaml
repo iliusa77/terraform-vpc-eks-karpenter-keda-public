@@ -1,0 +1,20 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: cpu-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: nginx
+    kind: Deployment
+    apiVersion: apps/v1
+  fallback: # Fallback strategy when metrics are unavailable for the apps
+    failureThreshold: 4 # Optional. Default: 3 
+    replicas: 5 # Keep this desired state when metrics are unavailable.
+  minReplicaCount: 1                                 # Optional. Default: 0
+  maxReplicaCount: 3                                # Optional. Default: 100 
+  triggers:
+  - type: cpu
+    metricType: Utilization # Allowed types are 'Utilization' or 'AverageValue'
+    metadata:
+      value: "50" # If the CPU usage more than 50m, then KEDA will start a new replica
